@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DreamHouse Generator</title>
+    <title>Snapbuilder App</title>
     <!-- Tailwind CSS for layout utility -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Font Awesome for icons -->
@@ -54,7 +54,7 @@
             padding: 20px;
         }
 
-        /* Typography - Now using Bebas Neue */
+        /* Typography - Bebas Neue */
         .impact-text {
             font-family: 'Bebas Neue', sans-serif;
             text-transform: uppercase;
@@ -65,7 +65,7 @@
                 -1px 1px 0 #000,
                 1px 1px 0 #000,
                 3px 3px 5px rgba(0,0,0,0.5);
-            font-size: 3rem; /* Slightly larger for Bebas as it's condensed */
+            font-size: 3rem;
             line-height: 1;
         }
 
@@ -106,15 +106,15 @@
         
         /* FULL SCREEN Construction Animation Overlay */
         .construction-overlay {
-            position: fixed; /* Fixed to cover whole screen */
+            position: fixed;
             top: 0; left: 0; width: 100vw; height: 100vh;
-            z-index: 9999; /* Top of everything */
+            z-index: 9999;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            background: rgba(0, 20, 40, 0.6); /* Dark tint */
-            backdrop-filter: blur(15px); /* Strong Blur Effect */
+            background: rgba(0, 20, 40, 0.6);
+            backdrop-filter: blur(15px);
             opacity: 0;
             pointer-events: none;
             transition: opacity 0.5s ease;
@@ -128,9 +128,9 @@
         /* Generate Button */
         .btn-generate {
             background: #0f1c30;
-            color: #7dd3fc; /* Cyan-ish */
+            color: #7dd3fc;
             font-family: 'Bebas Neue', sans-serif;
-            font-size: 3rem; /* Adjusted for Bebas */
+            font-size: 3rem;
             letter-spacing: 2px;
             padding: 10px 40px;
             border: 3px solid white;
@@ -197,16 +197,13 @@
             background-size: cover;
         }
 
-        .mat-circle:hover {
-            transform: scale(1.1);
+        .mat-circle:hover { transform: scale(1.1); }
+        .mat-circle.active { 
+            box-shadow: 0 0 0 4px #4ade80; 
+            transform: scale(1.1); 
         }
 
-        .mat-circle.active {
-            box-shadow: 0 0 0 4px #4ade80; /* Green highlight */
-            transform: scale(1.1);
-        }
-
-        /* Material Textures (simulated with CSS gradients for self-containment) */
+        /* Material Textures */
         .mat-brick { background: repeating-linear-gradient(45deg, #a52a2a, #a52a2a 10px, #8b0000 10px, #8b0000 20px); }
         .mat-concrete { background: radial-gradient(#d3d3d3, #808080); }
         .mat-stone { background: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiPjxmaWx0ZXIgaWQ9Im4iPjxmZVR1cmJ1bGVuY2UgdHlwZT0iZnJhY3RhbE5vaXNlIiBiYXNlRnJlcXVlbmN5PSIwLjUiIG51bU9jdGF2ZXM9IjEiIHN0aXRjaFRpbGVzPSJzdGl0Y2giLz48L2ZpbHRlcj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjODA4MDgwIi8+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsdGVyPSJ1cmwoI24pIiBvcGFjaXR5PSIwLjUiLz48L3N2Zz4='); }
@@ -223,7 +220,7 @@
             -webkit-appearance: none;
             width: 100%;
             height: 12px;
-            background: #2e1a4d; /* Dark purple bg */
+            background: #2e1a4d;
             border-radius: 6px;
             border: 2px solid white;
             outline: none;
@@ -235,13 +232,13 @@
             width: 35px;
             height: 35px;
             border-radius: 50%;
-            background: #38bdf8; /* Cyan thumb */
+            background: #38bdf8;
             border: 3px solid white;
             cursor: pointer;
             box-shadow: 0 0 10px rgba(56, 189, 248, 0.5);
-            margin-top: -11.5px; /* Center thumb: (35px height / 2) - (12px track / 2) = 11.5px */
+            margin-top: -11.5px; 
             position: relative;
-            top: 50%;
+            z-index: 2;
         }
 
         .slider-limit {
@@ -298,7 +295,6 @@
             text-shadow: 1px 1px 0 #000;
         }
 
-        /* Hex/RGB Display Bubble */
         .color-info-bubble {
             background: rgba(0,0,0,0.8);
             padding: 5px 10px;
@@ -307,7 +303,7 @@
             font-size: 0.8rem;
             margin-left: 10px;
             border: 1px solid white;
-            display: none; /* Hidden by default */
+            display: none;
         }
         
         .color-info-bubble.visible {
@@ -315,14 +311,244 @@
             animation: fadeIn 0.3s ease;
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(5px); }
-            to { opacity: 1; transform: translateY(0); }
+        /* --- FURNITURE UI STYLES --- */
+        .btn-furniture {
+            background: transparent;
+            border: 2px solid white;
+            color: white;
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.5rem;
+            padding: 5px 20px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.2s;
+            margin-top: 10px;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .btn-furniture:hover {
+            background: rgba(255,255,255,0.1);
+            transform: scale(1.05);
         }
 
-        /* Timer/Progress Bar for Generation */
+        /* Common Modal Styles */
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            background: rgba(0,0,0,0.85);
+            backdrop-filter: blur(5px);
+            z-index: 5000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .modal-overlay.open {
+            display: flex;
+            opacity: 1;
+        }
+
+        .modal-content {
+            background: #1e5bbd;
+            border: 4px solid white;
+            border-radius: 20px;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+            transform: scale(0.8);
+            opacity: 0;
+        }
+        
+        /* Welcome Modal Specifics */
+        .welcome-box {
+            max-width: 600px;
+            padding: 40px;
+            text-align: center;
+        }
+
+        .furniture-box {
+            width: 95%;
+            max-width: 900px;
+            height: 80vh;
+        }
+
+        /* Animation Keyframes */
+        @keyframes popIn {
+            0% { transform: scale(0.5); opacity: 0; }
+            60% { transform: scale(1.05); opacity: 1; }
+            100% { transform: scale(1); }
+        }
+
+        .modal-overlay.open .modal-content {
+            animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .modal-header {
+            background: #0f1c30;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid white;
+        }
+
+        .modal-body {
+            flex-grow: 1;
+            display: flex;
+            overflow: hidden;
+        }
+
+        /* Welcome Text */
+        .welcome-text {
+            font-size: 1.2rem;
+            line-height: 1.6;
+            margin: 20px 0;
+            color: #e0f2fe;
+            font-style: italic;
+        }
+
+        .btn-start {
+            background: #4ade80;
+            color: #0f1c30;
+            border: 3px solid white;
+            padding: 10px 40px;
+            font-family: 'Bebas Neue';
+            font-size: 2rem;
+            border-radius: 10px;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: transform 0.1s;
+        }
+        
+        .btn-start:hover { transform: scale(1.05); }
+
+        /* Furniture Sidebar */
+        .furniture-palette {
+            width: 120px;
+            background: rgba(0,0,0,0.2);
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            border-right: 2px solid rgba(255,255,255,0.2);
+            overflow-y: auto;
+        }
+
+        .palette-item {
+            width: 100%;
+            aspect-ratio: 1;
+            background: rgba(255,255,255,0.1);
+            border: 2px solid white;
+            border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: transform 0.2s, background 0.2s;
+            color: white;
+            text-align: center;
+        }
+
+        .palette-item:hover {
+            background: rgba(255,255,255,0.3);
+            transform: scale(1.05);
+        }
+
+        .palette-item.active-mode {
+            background: #4ade80;
+            color: #0f1c30;
+            border-color: #0f1c30;
+        }
+
+        .palette-item i { font-size: 1.5rem; margin-bottom: 5px; }
+        .palette-item span { font-size: 0.8rem; font-family: 'Bebas Neue'; letter-spacing: 1px; }
+
+        .room-canvas {
+            flex-grow: 1;
+            background-image: 
+                linear-gradient(rgba(255, 255, 255, 0.2) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.2) 1px, transparent 1px);
+            background-size: 40px 40px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .room-canvas.draw-mode { cursor: crosshair; }
+        .room-canvas.move-mode { cursor: default; }
+
+        .room-label {
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            font-family: 'Bebas Neue';
+            font-size: 5rem;
+            color: rgba(255,255,255,0.1);
+            pointer-events: none;
+            user-select: none;
+        }
+
+        /* Wall Drawing Layer */
+        .wall-layer {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            z-index: 10;
+            pointer-events: none;
+        }
+
+        .room-canvas.draw-mode .wall-layer { pointer-events: auto; }
+
+        /* Draggable Furniture on Canvas */
+        .furniture-piece {
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            background: white;
+            border: 2px solid #0f1c30;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #1e5bbd;
+            font-size: 1.5rem;
+            cursor: move;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            user-select: none;
+            touch-action: none; 
+            z-index: 20;
+        }
+        
+        .room-canvas.draw-mode .furniture-piece { pointer-events: none; opacity: 0.5; }
+        .room-canvas.move-mode .furniture-piece { cursor: move; pointer-events: auto; }
+
+        .furniture-piece:active {
+            transform: scale(1.1);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+            z-index: 100;
+        }
+
+        .btn-close-modal {
+            background: #4ade80;
+            color: #0f1c30;
+            border: none;
+            padding: 5px 20px;
+            font-family: 'Bebas Neue';
+            font-size: 1.2rem;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        /* Timer/Progress Bar */
         .progress-container {
-            width: 300px; /* Wider for full screen */
+            width: 300px;
             height: 20px;
             background: #333;
             border-radius: 10px;
@@ -339,22 +565,27 @@
             transition: width 1s linear;
         }
 
-        /* Hidden standard input */
-        #customColorInput {
-            position: absolute;
-            opacity: 0;
-            pointer-events: none;
-        }
+        #customColorInput { position: absolute; opacity: 0; pointer-events: none; }
 
     </style>
 </head>
 <body>
 
-    <!-- Decorative Blueprint Lines -->
     <div class="blueprint-line line-h"></div>
     <div class="blueprint-line line-v"></div>
 
-    <!-- FULL SCREEN OVERLAY (Moved outside container) -->
+    <!-- WELCOME MODAL (New) -->
+    <div class="modal-overlay open" id="welcomeModal">
+        <div class="modal-content welcome-box">
+            <div class="impact-text" style="font-size: 3.5rem;">Welcome</div>
+            <p class="welcome-text">
+                "Thank you for purchasing this innovative device, this will solve a big problem with housing prices, because it's so cheap! I started working on this product for years, after lots of trial testing and failed attempts, it finally works!"
+            </p>
+            <button class="btn-start" onclick="closeWelcomeModal()">LET'S BUILD</button>
+        </div>
+    </div>
+
+    <!-- FULL SCREEN CONSTRUCTION OVERLAY -->
     <div class="construction-overlay" id="constructionOverlay">
         <i class="fas fa-hammer fa-spin fa-4x" style="color: white; margin-bottom: 20px;"></i>
         <span class="impact-text" style="font-size: 4rem;">Building...</span>
@@ -364,34 +595,104 @@
         <div id="countdown" style="margin-top: 15px; font-family: monospace; font-size: 2rem; color: white;">10s</div>
     </div>
 
+    <!-- FURNITURE MODAL -->
+    <div class="modal-overlay" id="furnitureModal">
+        <div class="modal-content furniture-box">
+            <div class="modal-header">
+                <div class="impact-text" style="font-size: 2rem;">Interior Layout</div>
+                <button class="btn-close-modal" onclick="closeFurnitureModal()">DONE</button>
+            </div>
+            <div class="modal-body">
+                <!-- Sidebar -->
+                <div class="furniture-palette">
+                    <!-- Modes -->
+                    <div class="palette-item active-mode" id="btnMoveMode" onclick="setMode('move')">
+                        <i class="fas fa-hand-paper"></i>
+                        <span>Move</span>
+                    </div>
+                    <div class="palette-item" id="btnDrawMode" onclick="setMode('draw')">
+                        <i class="fas fa-pencil-ruler"></i>
+                        <span>Draw Wall</span>
+                    </div>
+                    
+                    <div style="width: 100%; height: 2px; background: rgba(255,255,255,0.2); margin: 5px 0;"></div>
+
+                    <!-- Items -->
+                    <div class="palette-item" onclick="addFurniture('couch')">
+                        <i class="fas fa-couch"></i>
+                        <span>Sofa</span>
+                    </div>
+                    <div class="palette-item" onclick="addFurniture('bed')">
+                        <i class="fas fa-bed"></i>
+                        <span>Bed</span>
+                    </div>
+                    <div class="palette-item" onclick="addFurniture('tv')">
+                        <i class="fas fa-tv"></i>
+                        <span>TV</span>
+                    </div>
+                    <div class="palette-item" onclick="addFurniture('lightbulb')">
+                        <i class="fas fa-lightbulb"></i>
+                        <span>Lamp</span>
+                    </div>
+                    <div class="palette-item" onclick="addFurniture('chair')">
+                        <i class="fas fa-chair"></i>
+                        <span>Chair</span>
+                    </div>
+                    <div class="palette-item" onclick="addFurniture('leaf')">
+                        <i class="fas fa-leaf"></i>
+                        <span>Plant</span>
+                    </div>
+                    <div class="palette-item" style="margin-top:auto; background: #ef4444;" onclick="clearRoom()">
+                        <i class="fas fa-trash"></i>
+                        <span>Clear All</span>
+                    </div>
+                </div>
+                <!-- Canvas -->
+                <div class="room-canvas move-mode" id="roomCanvas">
+                    <div class="room-label">FLOOR PLAN</div>
+                    <!-- SVG Layer for Drawing Walls -->
+                    <svg class="wall-layer" id="wallLayer" onmousedown="startWall(event)" onmousemove="drawWall(event)" onmouseup="endWall(event)" ontouchstart="startWall(event)" ontouchmove="drawWall(event)" ontouchend="endWall(event)">
+                        <!-- Walls will be lines here -->
+                    </svg>
+                    <!-- Furniture items will be appended here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="app-container">
         
-        <!-- TOP SECTION: House & Generate Button -->
+        <!-- TOP SECTION -->
         <div class="top-section">
             <div class="house-preview" id="housePreview">
-                <!-- SVG House Sketch -->
                 <svg class="house-sketch" id="houseSvg" viewBox="0 0 200 150" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M20 80 L100 20 L180 80 V140 H20 V80 Z" stroke="white" stroke-width="4" stroke-linejoin="round"/>
                     <rect x="40" y="90" width="30" height="30" stroke="white" stroke-width="3"/>
                     <rect x="130" y="90" width="30" height="30" stroke="white" stroke-width="3"/>
                     <rect x="85" y="90" width="30" height="50" stroke="white" stroke-width="3"/>
                     <path d="M100 35 L100 55" stroke="white" stroke-width="3"/>
-                    <path d="M130 105 H160 M145 90 V120" stroke="white" stroke-width="2"/> <!-- Window bars -->
-                    <path d="M40 105 H70 M55 90 V120" stroke="white" stroke-width="2"/> <!-- Window bars -->
-                    <!-- Chimney -->
+                    <path d="M130 105 H160 M145 90 V120" stroke="white" stroke-width="2"/> 
+                    <path d="M40 105 H70 M55 90 V120" stroke="white" stroke-width="2"/> 
                     <path d="M140 50 V30 H160 V65" stroke="white" stroke-width="3"/>
-                    <!-- Bush -->
                     <path d="M10 140 Q0 130 10 120 Q20 110 30 120 L170 120 Q180 110 190 120 Q200 130 190 140 H10" stroke="white" stroke-width="2" stroke-dasharray="4 2"/>
                 </svg>
             </div>
 
-            <button class="btn-generate" id="generateBtn" onclick="startGeneration()">
-                Generate
-            </button>
+            <div style="display:flex; flex-direction:column; align-items:center; gap: 10px;">
+                <button class="btn-generate" id="generateBtn" onclick="startGeneration()">Generate</button>
+            </div>
         </div>
 
         <!-- CONTROLS SECTION -->
         <div class="controls-grid">
+
+            <!-- Furniture Button Row -->
+             <div class="control-row" style="justify-content: flex-end;">
+                 <div class="label-col" style="display:none;"></div> <!-- Spacer -->
+                 <button class="btn-furniture" onclick="openFurnitureModal()">
+                    <i class="fas fa-pen-ruler"></i> Furnish
+                 </button>
+             </div>
 
             <!-- Material Selection -->
             <div class="control-row">
@@ -423,14 +724,11 @@
                     <div class="impact-text">Colour:</div>
                 </div>
                 <div class="color-options">
-                    <!-- Custom Rainbow Wheel -->
                     <div class="col-circle col-rainbow" id="customColorBtn" onclick="openCustomColor()" title="Custom Color">
                         <i class="fas fa-eye-dropper" style="font-size: 1.2rem; color: rgba(0,0,0,0.5);"></i>
                     </div>
-                    <!-- Hidden Native Input -->
                     <input type="color" id="customColorInput" onchange="applyCustomColor(this.value)">
 
-                    <!-- Presets -->
                     <div class="col-circle" style="background-color: #a0522d;" onclick="selectColor(this, '#a0522d')"></div>
                     <div class="col-circle" style="background-color: #f4a460;" onclick="selectColor(this, '#f4a460')"></div>
                     <div class="col-circle" style="background-color: #ffffff;" onclick="selectColor(this, '#ffffff')"></div>
@@ -438,7 +736,6 @@
                     <div class="col-circle" style="background-color: #d2b48c;" onclick="selectColor(this, '#d2b48c')"></div>
                     <div class="col-circle" style="background-color: #708090;" onclick="selectColor(this, '#708090')"></div>
 
-                    <!-- Info Bubble -->
                     <div class="color-info-bubble" id="colorInfo">
                         HEX: <span id="hexValue">#FFFFFF</span><br>
                         RGB: <span id="rgbValue">255, 255, 255</span>
@@ -454,37 +751,180 @@
         let currentMaterial = 'brick';
         let currentColor = '#ffffff';
         let isGenerating = false;
+        let layoutMode = 'move'; // 'move' or 'draw'
 
-        // --- SIZE LOGIC ---
+        // --- WELCOME MODAL ---
+        function closeWelcomeModal() {
+            document.getElementById('welcomeModal').classList.remove('open');
+        }
+
+        // --- FURNITURE MODAL ---
+        function openFurnitureModal() {
+            document.getElementById('furnitureModal').classList.add('open');
+        }
+
+        function closeFurnitureModal() {
+            document.getElementById('furnitureModal').classList.remove('open');
+        }
+
+        function setMode(mode) {
+            layoutMode = mode;
+            const canvas = document.getElementById('roomCanvas');
+            const btnMove = document.getElementById('btnMoveMode');
+            const btnDraw = document.getElementById('btnDrawMode');
+
+            if (mode === 'move') {
+                canvas.classList.remove('draw-mode');
+                canvas.classList.add('move-mode');
+                btnMove.classList.add('active-mode');
+                btnDraw.classList.remove('active-mode');
+            } else {
+                canvas.classList.remove('move-mode');
+                canvas.classList.add('draw-mode');
+                btnDraw.classList.add('active-mode');
+                btnMove.classList.remove('active-mode');
+            }
+        }
+
+        function addFurniture(iconClass) {
+            setMode('move');
+            const canvas = document.getElementById('roomCanvas');
+            const piece = document.createElement('div');
+            piece.className = 'furniture-piece';
+            piece.innerHTML = `<i class="fas fa-${iconClass}"></i>`;
+            
+            piece.style.top = (canvas.clientHeight / 2 - 30 + (Math.random()*40-20)) + 'px';
+            piece.style.left = (canvas.clientWidth / 2 - 30 + (Math.random()*40-20)) + 'px';
+            
+            canvas.appendChild(piece);
+            makeDraggable(piece);
+        }
+
+        function clearRoom() {
+            const canvas = document.getElementById('roomCanvas');
+            const items = canvas.querySelectorAll('.furniture-piece');
+            items.forEach(i => i.remove());
+            const wallLayer = document.getElementById('wallLayer');
+            wallLayer.innerHTML = '';
+        }
+
+        // --- DRAGGING LOGIC ---
+        function makeDraggable(elmnt) {
+            let pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+            elmnt.onmousedown = dragMouseDown;
+            elmnt.ontouchstart = dragMouseDown;
+
+            function dragMouseDown(e) {
+                if(layoutMode === 'draw') return; 
+                const evt = e.type === 'touchstart' ? e.touches[0] : e;
+                pos3 = evt.clientX;
+                pos4 = evt.clientY;
+                document.onmouseup = closeDragElement;
+                document.onmousemove = elementDrag;
+                document.ontouchend = closeDragElement;
+                document.ontouchmove = elementDrag;
+            }
+
+            function elementDrag(e) {
+                if(e.type === 'touchmove') { e.preventDefault(); }
+                const evt = e.type === 'touchmove' ? e.touches[0] : e;
+                pos1 = pos3 - evt.clientX;
+                pos2 = pos4 - evt.clientY;
+                pos3 = evt.clientX;
+                pos4 = evt.clientY;
+
+                let newTop = elmnt.offsetTop - pos2;
+                let newLeft = elmnt.offsetLeft - pos1;
+
+                const parent = document.getElementById('roomCanvas');
+                if (newTop < 0) newTop = 0;
+                if (newLeft < 0) newLeft = 0;
+                if (newTop > parent.clientHeight - elmnt.clientHeight) newTop = parent.clientHeight - elmnt.clientHeight;
+                if (newLeft > parent.clientWidth - elmnt.clientWidth) newLeft = parent.clientWidth - elmnt.clientWidth;
+
+                elmnt.style.top = newTop + "px";
+                elmnt.style.left = newLeft + "px";
+            }
+
+            function closeDragElement() {
+                document.onmouseup = null;
+                document.onmousemove = null;
+                document.ontouchend = null;
+                document.ontouchmove = null;
+            }
+        }
+
+        // --- WALL DRAWING LOGIC ---
+        let isDrawing = false;
+        let currentLine = null;
+
+        function startWall(e) {
+            if (layoutMode !== 'draw') return;
+            if(e.type === 'touchstart') e.preventDefault();
+
+            isDrawing = true;
+            const svg = document.getElementById('wallLayer');
+            const rect = svg.getBoundingClientRect();
+            
+            const evt = e.type === 'touchstart' ? e.touches[0] : e;
+            const x = evt.clientX - rect.left;
+            const y = evt.clientY - rect.top;
+
+            currentLine = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+            currentLine.setAttribute('x1', x);
+            currentLine.setAttribute('y1', y);
+            currentLine.setAttribute('x2', x);
+            currentLine.setAttribute('y2', y);
+            currentLine.setAttribute('stroke', 'white');
+            currentLine.setAttribute('stroke-width', '4');
+            currentLine.setAttribute('stroke-linecap', 'round');
+            
+            svg.appendChild(currentLine);
+        }
+
+        function drawWall(e) {
+            if (!isDrawing || !currentLine) return;
+            if(e.type === 'touchmove') e.preventDefault();
+
+            const svg = document.getElementById('wallLayer');
+            const rect = svg.getBoundingClientRect();
+            
+            const evt = e.type === 'touchmove' ? e.touches[0] : e;
+            const x = evt.clientX - rect.left;
+            const y = evt.clientY - rect.top;
+
+            currentLine.setAttribute('x2', x);
+            currentLine.setAttribute('y2', y);
+        }
+
+        function endWall(e) {
+            isDrawing = false;
+            currentLine = null;
+        }
+
+
+        // --- MAIN APP LOGIC ---
+
         function updateSize(val) {
             document.getElementById('sizeLabel').textContent = `Size: ${val}M²`;
-            // Visual feedback: scale house from 0.8 (at 30m) to 1.1 (at 80m)
             const scale = 0.8 + ((val - 30) / 50) * 0.3; 
             if (!isGenerating) {
                 document.getElementById('houseSvg').style.transform = `scale(${scale})`;
             }
         }
 
-        // --- MATERIAL LOGIC ---
         function selectMaterial(el, mat) {
-            // Remove active class from all
             document.querySelectorAll('.mat-circle').forEach(c => c.classList.remove('active'));
-            // Add to clicked
             el.classList.add('active');
             currentMaterial = mat;
-            console.log("Material set to: " + mat);
         }
 
-        // --- COLOR LOGIC ---
         function selectColor(el, color) {
-            // UI Update
             document.querySelectorAll('.col-circle').forEach(c => c.classList.remove('active'));
             if(el) el.classList.add('active');
-            
             currentColor = color;
             updateColorInfo(color);
 
-            // Apply to House SVG
             const paths = document.querySelectorAll('#houseSvg path, #houseSvg rect');
             paths.forEach(p => {
                 p.style.fill = color;
@@ -498,10 +938,8 @@
 
         function applyCustomColor(color) {
             const btn = document.getElementById('customColorBtn');
-            // Remove active from others
             document.querySelectorAll('.col-circle').forEach(c => c.classList.remove('active'));
             btn.classList.add('active');
-            
             selectColor(null, color);
         }
 
@@ -509,15 +947,11 @@
             const r = parseInt(hex.slice(1, 3), 16);
             const g = parseInt(hex.slice(3, 5), 16);
             const b = parseInt(hex.slice(5, 7), 16);
-
             document.getElementById('hexValue').textContent = hex.toUpperCase();
             document.getElementById('rgbValue').textContent = `${r}, ${g}, ${b}`;
-            
-            const bubble = document.getElementById('colorInfo');
-            bubble.classList.add('visible');
+            document.getElementById('colorInfo').classList.add('visible');
         }
 
-        // --- GENERATION LOGIC ---
         function startGeneration() {
             if (isGenerating) return;
             isGenerating = true;
@@ -528,16 +962,13 @@
             const pContainer = document.getElementById('progressContainer');
             const countText = document.getElementById('countdown');
 
-            // Set UI to busy
             btn.disabled = true;
             btn.textContent = "Working...";
             
-            // Show Overlay
             overlay.classList.add('active');
             pContainer.style.display = 'block';
             pBar.style.width = '0%';
 
-            // Timer Logic
             let timeLeft = 10;
             countText.textContent = timeLeft + 's';
 
@@ -545,7 +976,6 @@
                 timeLeft--;
                 countText.textContent = timeLeft + 's';
                 
-                // Progress bar width
                 const percentage = ((10 - timeLeft) / 10) * 100;
                 pBar.style.width = percentage + '%';
 
@@ -560,26 +990,21 @@
             const btn = document.getElementById('generateBtn');
             const overlay = document.getElementById('constructionOverlay');
             
-            // "Done" state briefly
             document.getElementById('countdown').textContent = "DONE!";
             
             setTimeout(() => {
-                // Reset everything
                 isGenerating = false;
                 btn.disabled = false;
                 btn.textContent = "Generate";
                 
-                // Hide Overlay
                 overlay.classList.remove('active');
                 
-                // Reset progress bar for next time
                 setTimeout(() => {
                    document.getElementById('progressContainer').style.display = 'none'; 
                 }, 500);
             }, 1000);
         }
 
-        // Initialize
         updateSize(70);
     </script>
 </body>
