@@ -292,7 +292,7 @@
             text-shadow: 1px 1px 0 #000;
         }
 
-        /* Color Picker */
+        /* Color Picker Buttons */
         .color-options {
             display: flex;
             gap: 15px;
@@ -408,7 +408,7 @@
             opacity: 0;
         }
         
-        /* Welcome Modal Specifics */
+        /* Modal Specifics */
         .welcome-box {
             max-width: 600px;
             padding: 40px;
@@ -419,6 +419,13 @@
             width: 95%;
             max-width: 900px;
             height: 80vh;
+        }
+        
+        .color-box {
+            width: 90%;
+            max-width: 500px;
+            padding: 0;
+            border: 3px solid white;
         }
 
         /* Animation Keyframes */
@@ -476,42 +483,30 @@
         
         .btn-start:hover { transform: scale(1.05); }
 
-        /* Furniture Sidebar - SCROLL & FIXES */
+        /* Furniture Sidebar */
         .furniture-palette {
-            width: 140px; /* Slightly wider */
+            width: 140px;
             background: rgba(0,0,0,0.2);
             padding: 10px;
             display: flex;
             flex-direction: column;
             gap: 10px;
             border-right: 2px solid rgba(255,255,255,0.2);
-            
-            /* Scroll properties */
             overflow-y: auto; 
             height: 100%;
             flex-shrink: 0;
-            
-            /* Custom scrollbar styling */
             scrollbar-width: thin;
             scrollbar-color: rgba(255,255,255,0.5) transparent;
         }
 
-        /* Webkit scrollbar (Chrome/Safari) */
-        .furniture-palette::-webkit-scrollbar {
-            width: 6px;
-        }
-        .furniture-palette::-webkit-scrollbar-track {
-            background: transparent;
-        }
-        .furniture-palette::-webkit-scrollbar-thumb {
-            background-color: rgba(255,255,255,0.3);
-            border-radius: 20px;
-        }
+        .furniture-palette::-webkit-scrollbar { width: 6px; }
+        .furniture-palette::-webkit-scrollbar-track { background: transparent; }
+        .furniture-palette::-webkit-scrollbar-thumb { background-color: rgba(255,255,255,0.3); border-radius: 20px; }
 
         .palette-item {
             width: 100%;
-            min-height: 100px; /* Force minimum height to prevent squishing */
-            height: 100px; /* Set specific height */
+            min-height: 100px;
+            height: 100px;
             background: rgba(255,255,255,0.1);
             border: 2px solid white;
             border-radius: 10px;
@@ -525,7 +520,7 @@
             text-align: center;
             position: relative;
             overflow: hidden;
-            flex-shrink: 0; /* CRITICAL: Prevents flexbox from squishing items */
+            flex-shrink: 0;
         }
 
         .palette-item:hover {
@@ -639,6 +634,123 @@
             transition: width 1s linear;
         }
 
+        /* --- NEW COLOR PICKER MODAL STYLES --- */
+        .color-modal-body {
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background: #1e5bbd; /* Blueprint Blue */
+            gap: 15px;
+        }
+
+        .color-preview-box {
+            width: 100%;
+            height: 100px;
+            border: 3px solid white;
+            border-radius: 10px;
+            background: white;
+            transition: background 0.3s;
+            box-shadow: inset 0 0 20px rgba(0,0,0,0.2);
+        }
+
+        .hex-grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 8px;
+            max-width: 300px;
+        }
+
+        .hex-cell {
+            width: 40px;
+            height: 40px;
+            clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+            background-color: #fff;
+            cursor: pointer;
+            transition: transform 0.2s;
+            /* UPDATED: Added outline via filter */
+            filter: drop-shadow(0 0 1px #fff) drop-shadow(0 0 1px #fff);
+            margin: 2px;
+        }
+
+        .hex-cell:hover {
+            transform: scale(1.2);
+            z-index: 10;
+        }
+        
+        .hue-slider {
+            -webkit-appearance: none;
+            width: 100%;
+            height: 15px;
+            border-radius: 10px;
+            background: linear-gradient(to right, red, orange, yellow, lime, cyan, blue, magenta, red);
+            outline: none;
+            border: 2px solid white;
+            cursor: pointer;
+            transition: opacity 0.3s;
+        }
+        
+        /* Disable state style */
+        .hue-slider:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+            filter: grayscale(100%);
+        }
+        
+        .hue-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            background: white;
+            border: 2px solid #333;
+            cursor: pointer;
+        }
+
+        .brightness-slider {
+            -webkit-appearance: none;
+            width: 100%;
+            height: 15px;
+            border-radius: 10px;
+            background: linear-gradient(to right, black, white); /* Default, updated by JS */
+            outline: none;
+            border: 2px solid white;
+            cursor: pointer;
+        }
+        
+        .brightness-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            background: white;
+            border: 2px solid #333;
+            cursor: pointer;
+        }
+
+        .hex-input-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            width: 100%;
+            background: rgba(0,0,0,0.2);
+            padding: 5px 10px;
+            border-radius: 10px;
+            border: 1px solid rgba(255,255,255,0.3);
+        }
+        
+        .hex-input {
+            background: transparent;
+            border: none;
+            color: white;
+            font-family: monospace;
+            font-size: 1.2rem;
+            width: 100%;
+            outline: none;
+            text-transform: uppercase;
+        }
+
         #customColorInput { position: absolute; opacity: 0; pointer-events: none; }
 
     </style>
@@ -667,6 +779,50 @@
             <div class="progress-bar" id="progressBar"></div>
         </div>
         <div id="countdown" style="margin-top: 15px; font-family: monospace; font-size: 2rem; color: white;">10s</div>
+    </div>
+
+    <!-- NEW CUSTOM COLOR MODAL -->
+    <div class="modal-overlay" id="colorModal">
+        <div class="modal-content color-box">
+            <div class="modal-header">
+                <div class="impact-text" style="font-size: 2rem;">Select Colour</div>
+                <!-- Close X -->
+                <i class="fas fa-times cursor-pointer" style="font-size: 1.5rem;" onclick="closeColorModal()"></i>
+            </div>
+            <div class="color-modal-body">
+                <!-- Large Preview -->
+                <div class="color-preview-box" id="modalColorPreview"></div>
+                
+                <!-- Hue Slider -->
+                <div style="width:100%">
+                    <label style="font-size:0.8rem; opacity:0.8;">HUE</label>
+                    <input type="range" class="hue-slider" min="0" max="360" value="0" id="hueSlider" oninput="updateColorFromControls()">
+                </div>
+                
+                <!-- Brightness Slider -->
+                <div style="width:100%">
+                    <label style="font-size:0.8rem; opacity:0.8;">BRIGHTNESS</label>
+                    <input type="range" class="brightness-slider" min="0" max="100" value="50" id="lightnessSlider" oninput="updateColorFromControls()">
+                </div>
+
+                <!-- Hexagon Grid -->
+                <div class="hex-grid" id="hexGrid">
+                    <!-- JS will populate -->
+                </div>
+
+                <!-- Hex Input -->
+                <div class="hex-input-row">
+                    <span style="font-family: monospace;">#</span>
+                    <input type="text" class="hex-input" id="modalHexInput" value="FFFFFF" oninput="updateFromHexInput(this.value)" maxlength="6">
+                </div>
+
+                <!-- Action Buttons -->
+                <div style="display:flex; gap: 10px; width: 100%; margin-top: 10px;">
+                     <button class="btn-close-modal ripple-btn" style="background:#ef4444; flex:1;" onclick="closeColorModal()">CANCEL</button>
+                     <button class="btn-close-modal ripple-btn" style="flex:1;" onclick="confirmColorModal()">SELECT</button>
+                </div>
+            </div>
+        </div>
     </div>
 
     <!-- FURNITURE MODAL -->
@@ -810,10 +966,10 @@
                     <div class="impact-text">Colour:</div>
                 </div>
                 <div class="color-options">
-                    <div class="col-circle col-rainbow ripple-btn" id="customColorBtn" onclick="openCustomColor()" title="Custom Color">
+                    <div class="col-circle col-rainbow ripple-btn" id="customColorBtn" onclick="openColorModal()" title="Custom Color">
                         <i class="fas fa-eye-dropper" style="font-size: 1.2rem; color: rgba(0,0,0,0.5);"></i>
                     </div>
-                    <input type="color" id="customColorInput" onchange="applyCustomColor(this.value)">
+                    <input type="color" id="customColorInput" style="display:none;">
 
                     <div class="col-circle ripple-btn" style="background-color: #a0522d;" onclick="selectColor(this, '#a0522d')"></div>
                     <div class="col-circle ripple-btn" style="background-color: #f4a460;" onclick="selectColor(this, '#f4a460')"></div>
@@ -836,24 +992,16 @@
         // --- RIPPLE EFFECT JS ---
         function createRipple(event) {
             const button = event.currentTarget;
-            
             const circle = document.createElement("span");
             const diameter = Math.max(button.clientWidth, button.clientHeight);
             const radius = diameter / 2;
-
             const rect = button.getBoundingClientRect();
-            
             circle.style.width = circle.style.height = `${diameter}px`;
             circle.style.left = `${event.clientX - rect.left - radius}px`;
             circle.style.top = `${event.clientY - rect.top - radius}px`;
             circle.classList.add("ripple-effect");
-
             const ripple = button.getElementsByClassName("ripple-effect")[0];
-
-            if (ripple) {
-                ripple.remove();
-            }
-
+            if (ripple) ripple.remove();
             button.appendChild(circle);
         }
 
@@ -862,11 +1010,19 @@
             for (const button of buttons) {
                 button.addEventListener("click", createRipple);
             }
+            populateHexGrid();
         });
 
         // State
         let currentMaterial = 'brick';
         let currentColor = '#ffffff';
+        
+        // HSL State for Color Modal
+        let modalHue = 0;
+        let modalSat = 100;
+        let modalLight = 50;
+        let tempColor = '#ffffff'; 
+
         let isGenerating = false;
         let layoutMode = 'move'; 
 
@@ -879,17 +1035,169 @@
         function openFurnitureModal() {
             document.getElementById('furnitureModal').classList.add('open');
         }
-
         function closeFurnitureModal() {
             document.getElementById('furnitureModal').classList.remove('open');
         }
 
+        // --- COLOR MODAL LOGIC (UPDATED) ---
+        function openColorModal() {
+            document.getElementById('colorModal').classList.add('open');
+            // Init from currentColor
+            const hsl = hexToHSL(currentColor);
+            modalHue = hsl.h;
+            modalSat = hsl.s;
+            modalLight = hsl.l;
+            
+            document.getElementById('hueSlider').value = modalHue;
+            document.getElementById('lightnessSlider').value = modalLight;
+            
+            updateColorFromControls();
+        }
+
+        function closeColorModal() {
+            document.getElementById('colorModal').classList.remove('open');
+        }
+
+        function confirmColorModal() {
+            applyCustomColor(tempColor);
+            closeColorModal();
+        }
+
+        function populateHexGrid() {
+            const grid = document.getElementById('hexGrid');
+            const colors = [
+                '#ff0000', '#ff8800', '#ffff00', '#88ff00', '#00ff00', 
+                '#00ff88', '#00ffff', '#0088ff', '#0000ff', '#8800ff',
+                '#ff00ff', '#ff0088', '#ffffff', '#aaaaaa', '#555555', 
+                '#000000', '#604020', '#a0522d', '#f4a460', '#f5deb3'
+            ];
+            
+            colors.forEach(c => {
+                const hex = document.createElement('div');
+                hex.className = 'hex-cell';
+                hex.style.backgroundColor = c;
+                hex.onclick = () => {
+                    const hsl = hexToHSL(c);
+                    modalHue = hsl.h;
+                    modalSat = hsl.s; // This will catch grey/black/white saturation (0)
+                    modalLight = hsl.l;
+                    document.getElementById('hueSlider').value = modalHue;
+                    document.getElementById('lightnessSlider').value = modalLight;
+                    updateColorFromControls();
+                };
+                grid.appendChild(hex);
+            });
+        }
+
+        function updateHueSliderState() {
+            const hueSlider = document.getElementById('hueSlider');
+            // Logic: Disable if saturation is low OR lightness is extreme black/white
+            if (modalSat < 1 || modalLight === 0 || modalLight === 100) {
+                hueSlider.disabled = true;
+            } else {
+                hueSlider.disabled = false;
+            }
+        }
+
+        function updateColorFromControls() {
+            modalHue = parseInt(document.getElementById('hueSlider').value);
+            modalLight = parseInt(document.getElementById('lightnessSlider').value);
+            
+            // Check disable state
+            updateHueSliderState();
+            
+            // Update brightness slider gradient
+            const brightSlider = document.getElementById('lightnessSlider');
+            brightSlider.style.background = `linear-gradient(to right, black, hsl(${modalHue}, ${modalSat}%, 50%), white)`;
+
+            // HSL to Hex
+            tempColor = HSLToHex(modalHue, modalSat, modalLight);
+            
+            // Update UI
+            document.getElementById('modalColorPreview').style.backgroundColor = tempColor;
+            document.getElementById('modalHexInput').value = tempColor.replace('#', '').toUpperCase();
+        }
+
+        function updateFromHexInput(val) {
+            if(val.length === 6) {
+                const hex = '#' + val;
+                const hsl = hexToHSL(hex);
+                modalHue = hsl.h;
+                modalSat = hsl.s;
+                modalLight = hsl.l;
+                
+                document.getElementById('hueSlider').value = modalHue;
+                document.getElementById('lightnessSlider').value = modalLight;
+                
+                // Update visuals
+                const brightSlider = document.getElementById('lightnessSlider');
+                brightSlider.style.background = `linear-gradient(to right, black, hsl(${modalHue}, ${modalSat}%, 50%), white)`;
+                
+                document.getElementById('modalColorPreview').style.backgroundColor = hex;
+                tempColor = hex;
+                updateHueSliderState();
+            }
+        }
+
+        // --- HELPERS ---
+        function hexToHSL(H) {
+            let r = 0, g = 0, b = 0;
+            if (H.length == 4) {
+                r = "0x" + H[1] + H[1];
+                g = "0x" + H[2] + H[2];
+                b = "0x" + H[3] + H[3];
+            } else if (H.length == 7) {
+                r = "0x" + H[1] + H[2];
+                g = "0x" + H[3] + H[4];
+                b = "0x" + H[5] + H[6];
+            }
+            r /= 255; g /= 255; b /= 255;
+            let cmin = Math.min(r,g,b),
+                cmax = Math.max(r,g,b),
+                delta = cmax - cmin,
+                h = 0, s = 0, l = 0;
+            if (delta == 0) h = 0;
+            else if (cmax == r) h = ((g - b) / delta) % 6;
+            else if (cmax == g) h = (b - r) / delta + 2;
+            else h = (r - g) / delta + 4;
+            h = Math.round(h * 60);
+            if (h < 0) h += 360;
+            l = (cmax + cmin) / 2;
+            s = delta == 0 ? 0 : delta / (1 - Math.abs(2 * l - 1));
+            s = +(s * 100).toFixed(1);
+            l = +(l * 100).toFixed(1);
+            return { h, s, l };
+        }
+
+        function HSLToHex(h, s, l) {
+            s /= 100;
+            l /= 100;
+            let c = (1 - Math.abs(2 * l - 1)) * s,
+                x = c * (1 - Math.abs((h / 60) % 2 - 1)),
+                m = l - c / 2,
+                r = 0, g = 0, b = 0;
+            if (0 <= h && h < 60) { r = c; g = x; b = 0; }
+            else if (60 <= h && h < 120) { r = x; g = c; b = 0; }
+            else if (120 <= h && h < 180) { r = 0; g = c; b = x; }
+            else if (180 <= h && h < 240) { r = 0; g = x; b = c; }
+            else if (240 <= h && h < 300) { r = x; g = 0; b = c; }
+            else if (300 <= h && h < 360) { r = c; g = 0; b = x; }
+            r = Math.round((r + m) * 255).toString(16);
+            g = Math.round((g + m) * 255).toString(16);
+            b = Math.round((b + m) * 255).toString(16);
+            if (r.length == 1) r = "0" + r;
+            if (g.length == 1) g = "0" + g;
+            if (b.length == 1) b = "0" + b;
+            return "#" + r + g + b;
+        }
+
+
+        // --- FURNITURE LOGIC ---
         function setMode(mode) {
             layoutMode = mode;
             const canvas = document.getElementById('roomCanvas');
             const btnMove = document.getElementById('btnMoveMode');
             const btnDraw = document.getElementById('btnDrawMode');
-
             if (mode === 'move') {
                 canvas.classList.remove('draw-mode');
                 canvas.classList.add('move-mode');
@@ -902,21 +1210,17 @@
                 btnMove.classList.remove('active-mode');
             }
         }
-
         function addFurniture(iconClass) {
             setMode('move');
             const canvas = document.getElementById('roomCanvas');
             const piece = document.createElement('div');
             piece.className = 'furniture-piece';
             piece.innerHTML = `<i class="fas fa-${iconClass}"></i>`;
-            
             piece.style.top = (canvas.clientHeight / 2 - 30 + (Math.random()*40-20)) + 'px';
             piece.style.left = (canvas.clientWidth / 2 - 30 + (Math.random()*40-20)) + 'px';
-            
             canvas.appendChild(piece);
             makeDraggable(piece);
         }
-
         function clearRoom() {
             const canvas = document.getElementById('roomCanvas');
             const items = canvas.querySelectorAll('.furniture-piece');
@@ -924,13 +1228,10 @@
             const wallLayer = document.getElementById('wallLayer');
             wallLayer.innerHTML = '';
         }
-
-        // --- DRAGGING LOGIC ---
         function makeDraggable(elmnt) {
             let pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
             elmnt.onmousedown = dragMouseDown;
             elmnt.ontouchstart = dragMouseDown;
-
             function dragMouseDown(e) {
                 if(layoutMode === 'draw') return; 
                 const evt = e.type === 'touchstart' ? e.touches[0] : e;
@@ -941,7 +1242,6 @@
                 document.ontouchend = closeDragElement;
                 document.ontouchmove = elementDrag;
             }
-
             function elementDrag(e) {
                 if(e.type === 'touchmove') { e.preventDefault(); }
                 const evt = e.type === 'touchmove' ? e.touches[0] : e;
@@ -949,20 +1249,16 @@
                 pos2 = pos4 - evt.clientY;
                 pos3 = evt.clientX;
                 pos4 = evt.clientY;
-
                 let newTop = elmnt.offsetTop - pos2;
                 let newLeft = elmnt.offsetLeft - pos1;
-
                 const parent = document.getElementById('roomCanvas');
                 if (newTop < 0) newTop = 0;
                 if (newLeft < 0) newLeft = 0;
                 if (newTop > parent.clientHeight - elmnt.clientHeight) newTop = parent.clientHeight - elmnt.clientHeight;
                 if (newLeft > parent.clientWidth - elmnt.clientWidth) newLeft = parent.clientWidth - elmnt.clientWidth;
-
                 elmnt.style.top = newTop + "px";
                 elmnt.style.left = newLeft + "px";
             }
-
             function closeDragElement() {
                 document.onmouseup = null;
                 document.onmousemove = null;
@@ -970,23 +1266,18 @@
                 document.ontouchmove = null;
             }
         }
-
         // --- WALL DRAWING LOGIC ---
         let isDrawing = false;
         let currentLine = null;
-
         function startWall(e) {
             if (layoutMode !== 'draw') return;
             if(e.type === 'touchstart') e.preventDefault();
-
             isDrawing = true;
             const svg = document.getElementById('wallLayer');
             const rect = svg.getBoundingClientRect();
-            
             const evt = e.type === 'touchstart' ? e.touches[0] : e;
             const x = evt.clientX - rect.left;
             const y = evt.clientY - rect.top;
-
             currentLine = document.createElementNS('http://www.w3.org/2000/svg', 'line');
             currentLine.setAttribute('x1', x);
             currentLine.setAttribute('y1', y);
@@ -995,32 +1286,25 @@
             currentLine.setAttribute('stroke', 'white');
             currentLine.setAttribute('stroke-width', '4');
             currentLine.setAttribute('stroke-linecap', 'round');
-            
             svg.appendChild(currentLine);
         }
-
         function drawWall(e) {
             if (!isDrawing || !currentLine) return;
             if(e.type === 'touchmove') e.preventDefault();
-
             const svg = document.getElementById('wallLayer');
             const rect = svg.getBoundingClientRect();
-            
             const evt = e.type === 'touchmove' ? e.touches[0] : e;
             const x = evt.clientX - rect.left;
             const y = evt.clientY - rect.top;
-
             currentLine.setAttribute('x2', x);
             currentLine.setAttribute('y2', y);
         }
-
         function endWall(e) {
             isDrawing = false;
             currentLine = null;
         }
 
         // --- MAIN APP LOGIC ---
-
         function updateSize(val) {
             document.getElementById('sizeLabel').textContent = `Size: ${val}M²`;
             const scale = 0.8 + ((val - 30) / 50) * 0.3; 
@@ -1028,37 +1312,28 @@
                 document.getElementById('houseSvg').style.transform = `scale(${scale})`;
             }
         }
-
         function selectMaterial(el, mat) {
             document.querySelectorAll('.mat-circle').forEach(c => c.classList.remove('active'));
             el.classList.add('active');
             currentMaterial = mat;
         }
-
         function selectColor(el, color) {
             document.querySelectorAll('.col-circle').forEach(c => c.classList.remove('active'));
             if(el) el.classList.add('active');
             currentColor = color;
             updateColorInfo(color);
-
             const paths = document.querySelectorAll('#houseSvg path, #houseSvg rect');
             paths.forEach(p => {
                 p.style.fill = color;
                 p.style.fillOpacity = "0.3"; 
             });
         }
-
-        function openCustomColor() {
-            document.getElementById('customColorInput').click();
-        }
-
         function applyCustomColor(color) {
             const btn = document.getElementById('customColorBtn');
             document.querySelectorAll('.col-circle').forEach(c => c.classList.remove('active'));
             btn.classList.add('active');
             selectColor(null, color);
         }
-
         function updateColorInfo(hex) {
             const r = parseInt(hex.slice(1, 3), 16);
             const g = parseInt(hex.slice(3, 5), 16);
@@ -1067,60 +1342,46 @@
             document.getElementById('rgbValue').textContent = `${r}, ${g}, ${b}`;
             document.getElementById('colorInfo').classList.add('visible');
         }
-
         function startGeneration() {
             if (isGenerating) return;
             isGenerating = true;
-
             const btn = document.getElementById('generateBtn');
             const overlay = document.getElementById('constructionOverlay');
             const pBar = document.getElementById('progressBar');
             const pContainer = document.getElementById('progressContainer');
             const countText = document.getElementById('countdown');
-
             btn.disabled = true;
             btn.textContent = "Working...";
-            
             overlay.classList.add('active');
             pContainer.style.display = 'block';
             pBar.style.width = '0%';
-
             let timeLeft = 10;
             countText.textContent = timeLeft + 's';
-
             const interval = setInterval(() => {
                 timeLeft--;
                 countText.textContent = timeLeft + 's';
-                
                 const percentage = ((10 - timeLeft) / 10) * 100;
                 pBar.style.width = percentage + '%';
-
                 if (timeLeft <= 0) {
                     clearInterval(interval);
                     finishGeneration();
                 }
             }, 1000);
         }
-
         function finishGeneration() {
             const btn = document.getElementById('generateBtn');
             const overlay = document.getElementById('constructionOverlay');
-            
             document.getElementById('countdown').textContent = "DONE!";
-            
             setTimeout(() => {
                 isGenerating = false;
                 btn.disabled = false;
                 btn.textContent = "Generate";
-                
                 overlay.classList.remove('active');
-                
                 setTimeout(() => {
                    document.getElementById('progressContainer').style.display = 'none'; 
                 }, 500);
             }, 1000);
         }
-
         updateSize(70);
     </script>
 </body>
