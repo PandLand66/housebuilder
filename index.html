@@ -135,14 +135,14 @@
         /* --- RIPPLE ANIMATION EFFECT --- */
         .ripple-btn {
             position: relative;
-            overflow: hidden; /* Contains the ripple */
-            transform: translate3d(0, 0, 0); /* Fix for Safari border-radius */
+            overflow: hidden; 
+            transform: translate3d(0, 0, 0); 
         }
 
         .ripple-effect {
             position: absolute;
             border-radius: 50%;
-            background: rgba(255, 255, 255, 0.6); /* White Ink */
+            background: rgba(255, 255, 255, 0.6); 
             transform: scale(0);
             animation: ripple-animation 0.6s linear;
             pointer-events: none;
@@ -421,7 +421,7 @@
             height: 80vh;
         }
 
-        /* Animation Keyframes for Modal */
+        /* Animation Keyframes */
         @keyframes popIn {
             0% { transform: scale(0.5); opacity: 0; }
             60% { transform: scale(1.05); opacity: 1; }
@@ -447,6 +447,7 @@
             flex-grow: 1;
             display: flex;
             overflow: hidden;
+            position: relative;
         }
 
         /* Welcome Text */
@@ -475,21 +476,42 @@
         
         .btn-start:hover { transform: scale(1.05); }
 
-        /* Furniture Sidebar */
+        /* Furniture Sidebar - SCROLL & FIXES */
         .furniture-palette {
-            width: 120px;
+            width: 140px; /* Slightly wider */
             background: rgba(0,0,0,0.2);
             padding: 10px;
             display: flex;
             flex-direction: column;
             gap: 10px;
             border-right: 2px solid rgba(255,255,255,0.2);
-            overflow-y: auto;
+            
+            /* Scroll properties */
+            overflow-y: auto; 
+            height: 100%;
+            flex-shrink: 0;
+            
+            /* Custom scrollbar styling */
+            scrollbar-width: thin;
+            scrollbar-color: rgba(255,255,255,0.5) transparent;
+        }
+
+        /* Webkit scrollbar (Chrome/Safari) */
+        .furniture-palette::-webkit-scrollbar {
+            width: 6px;
+        }
+        .furniture-palette::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .furniture-palette::-webkit-scrollbar-thumb {
+            background-color: rgba(255,255,255,0.3);
+            border-radius: 20px;
         }
 
         .palette-item {
             width: 100%;
-            aspect-ratio: 1;
+            min-height: 100px; /* Force minimum height to prevent squishing */
+            height: 100px; /* Set specific height */
             background: rgba(255,255,255,0.1);
             border: 2px solid white;
             border-radius: 10px;
@@ -503,6 +525,7 @@
             text-align: center;
             position: relative;
             overflow: hidden;
+            flex-shrink: 0; /* CRITICAL: Prevents flexbox from squishing items */
         }
 
         .palette-item:hover {
@@ -516,8 +539,8 @@
             border-color: #0f1c30;
         }
 
-        .palette-item i { font-size: 1.5rem; margin-bottom: 5px; }
-        .palette-item span { font-size: 0.8rem; font-family: 'Bebas Neue'; letter-spacing: 1px; }
+        .palette-item i { font-size: 1.8rem; margin-bottom: 5px; }
+        .palette-item span { font-size: 0.9rem; font-family: 'Bebas Neue'; letter-spacing: 1px; }
 
         .room-canvas {
             flex-grow: 1;
@@ -666,7 +689,7 @@
                         <span>Draw Wall</span>
                     </div>
                     
-                    <div style="width: 100%; height: 2px; background: rgba(255,255,255,0.2); margin: 5px 0;"></div>
+                    <div style="width: 100%; min-height: 2px; height: 2px; background: rgba(255,255,255,0.2); margin: 5px 0; flex-shrink: 0;"></div>
 
                     <!-- Items -->
                     <div class="palette-item ripple-btn" onclick="addFurniture('couch')">
@@ -692,6 +715,18 @@
                     <div class="palette-item ripple-btn" onclick="addFurniture('leaf')">
                         <i class="fas fa-leaf"></i>
                         <span>Plant</span>
+                    </div>
+                    <div class="palette-item ripple-btn" onclick="addFurniture('toilet')">
+                        <i class="fas fa-toilet"></i>
+                        <span>Toilet</span>
+                    </div>
+                    <div class="palette-item ripple-btn" onclick="addFurniture('bath')">
+                        <i class="fas fa-bath"></i>
+                        <span>Bath</span>
+                    </div>
+                    <div class="palette-item ripple-btn" onclick="addFurniture('table')">
+                        <i class="fas fa-table"></i>
+                        <span>Table</span>
                     </div>
                     <div class="palette-item ripple-btn" style="margin-top:auto; background: #ef4444;" onclick="clearRoom()">
                         <i class="fas fa-trash"></i>
@@ -822,7 +857,6 @@
             button.appendChild(circle);
         }
 
-        // Attach ripple to all elements with class 'ripple-btn'
         document.addEventListener('DOMContentLoaded', () => {
             const buttons = document.getElementsByClassName("ripple-btn");
             for (const button of buttons) {
@@ -830,12 +864,11 @@
             }
         });
 
-
         // State
         let currentMaterial = 'brick';
         let currentColor = '#ffffff';
         let isGenerating = false;
-        let layoutMode = 'move'; // 'move' or 'draw'
+        let layoutMode = 'move'; 
 
         // --- WELCOME MODAL ---
         function closeWelcomeModal() {
@@ -986,7 +1019,6 @@
             currentLine = null;
         }
 
-
         // --- MAIN APP LOGIC ---
 
         function updateSize(val) {
@@ -1001,7 +1033,6 @@
             document.querySelectorAll('.mat-circle').forEach(c => c.classList.remove('active'));
             el.classList.add('active');
             currentMaterial = mat;
-            // Ripple handled by class ripple-btn
         }
 
         function selectColor(el, color) {
@@ -1015,7 +1046,6 @@
                 p.style.fill = color;
                 p.style.fillOpacity = "0.3"; 
             });
-             // Ripple handled by class ripple-btn
         }
 
         function openCustomColor() {
