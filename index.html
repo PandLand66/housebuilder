@@ -96,8 +96,8 @@
         /* House Display */
         .house-preview {
             position: relative;
-            width: 280px;
-            height: 200px;
+            width: 300px;
+            height: 220px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -213,11 +213,27 @@
             flex-shrink: 0;
         }
 
-        /* Material Circles */
+        /* Material Circles & Labels */
         .material-options {
             display: flex;
-            gap: 15px;
+            gap: 20px;
             flex-wrap: wrap;
+            align-items: flex-start;
+        }
+
+        .mat-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .mat-label {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1rem;
+            color: white;
+            letter-spacing: 1px;
+            text-shadow: 1px 1px 0 #000;
         }
 
         .mat-circle {
@@ -230,6 +246,7 @@
             position: relative;
             overflow: hidden;
             background-size: cover;
+            background-position: center;
         }
 
         .mat-circle:hover { transform: scale(1.15); }
@@ -238,11 +255,11 @@
             transform: scale(1.1); 
         }
 
-        /* Material Textures */
-        .mat-brick { background: repeating-linear-gradient(45deg, #a52a2a, #a52a2a 10px, #8b0000 10px, #8b0000 20px); }
-        .mat-concrete { background: radial-gradient(#d3d3d3, #808080); }
-        .mat-stone { background: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiPjxmaWx0ZXIgaWQ9Im4iPjxmZVR1cmJ1bGVuY2UgdHlwZT0iZnJhY3RhbE5vaXNlIiBiYXNlRnJlcXVlbmN5PSIwLjUiIG51bU9jdGF2ZXM9IjEiIHN0aXRjaFRpbGVzPSJzdGl0Y2giLz48L2ZpbHRlcj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjODA4MDgwIi8+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsdGVyPSJ1cmwoI24pIiBvcGFjaXR5PSIwLjUiLz48L3N2Zz4='); }
-        .mat-wood { background: linear-gradient(90deg, #deb887, #8b4513); }
+        /* Material Textures - Using Provided URLs */
+        .mat-brick { background-image: url('https://lushfabric.com/wp-content/uploads/2021/08/brown-4-scaled.jpg'); }
+        .mat-concrete { background-image: url('https://cdn.architextures.org/textures/20/11/concrete-5fc4cb651ff0f-1200.jpg'); }
+        .mat-metal { background-image: url('https://usercontent.one/wp/www.scandinavian.house/wp-content/uploads/Material-Metal-Scandinavian-House-Stainless-steel.jpg'); }
+        .mat-wood { background-image: url('https://timberx.co.uk/wp-content/uploads/2023/07/Complete-Guide-to-Pine-Wood-scaled.jpg'); }
 
         /* Slider Customization */
         .slider-container {
@@ -669,7 +686,7 @@
             background-color: #fff;
             cursor: pointer;
             transition: transform 0.2s;
-            /* UPDATED: Added outline via filter */
+            /* WHITE OUTLINE via filter drop-shadow */
             filter: drop-shadow(0 0 1px #fff) drop-shadow(0 0 1px #fff);
             margin: 2px;
         }
@@ -688,14 +705,14 @@
             outline: none;
             border: 2px solid white;
             cursor: pointer;
-            transition: opacity 0.3s;
+            transition: opacity 0.3s, filter 0.3s;
         }
         
-        /* Disable state style */
+        /* Disabled state for hue slider */
         .hue-slider:disabled {
-            opacity: 0.3;
-            cursor: not-allowed;
+            opacity: 0.4;
             filter: grayscale(100%);
+            cursor: not-allowed;
         }
         
         .hue-slider::-webkit-slider-thumb {
@@ -907,16 +924,24 @@
         <!-- TOP SECTION -->
         <div class="top-section">
             <div class="house-preview" id="housePreview">
-                <svg class="house-sketch" id="houseSvg" viewBox="0 0 200 150" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M20 80 L100 20 L180 80 V140 H20 V80 Z" stroke="white" stroke-width="4" stroke-linejoin="round"/>
-                    <rect x="40" y="90" width="30" height="30" stroke="white" stroke-width="3"/>
-                    <rect x="130" y="90" width="30" height="30" stroke="white" stroke-width="3"/>
-                    <rect x="85" y="90" width="30" height="50" stroke="white" stroke-width="3"/>
-                    <path d="M100 35 L100 55" stroke="white" stroke-width="3"/>
-                    <path d="M130 105 H160 M145 90 V120" stroke="white" stroke-width="2"/> 
-                    <path d="M40 105 H70 M55 90 V120" stroke="white" stroke-width="2"/> 
-                    <path d="M140 50 V30 H160 V65" stroke="white" stroke-width="3"/>
-                    <path d="M10 140 Q0 130 10 120 Q20 110 30 120 L170 120 Q180 110 190 120 Q200 130 190 140 H10" stroke="white" stroke-width="2" stroke-dasharray="4 2"/>
+                <!-- Detailed Blueprint House SVG -->
+                <svg id="houseSvg" class="house-sketch" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 220" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="50" y="100" width="140" height="100" stroke="white" stroke-width="3"/>
+                    <rect x="190" y="130" width="80" height="70" stroke="white" stroke-width="3"/>
+                    <rect x="200" y="145" width="60" height="55" stroke="white" stroke-width="2"/>
+                    <path d="M200 155 H260 M200 165 H260 M200 175 H260 M200 185 H260" stroke="white" stroke-width="1"/>
+                    <path d="M40 100 L120 30 L200 100" stroke="white" stroke-width="4" stroke-linejoin="round"/>
+                    <path d="M190 130 L275 130" stroke="white" stroke-width="3"/>
+                    <rect x="150" y="45" width="20" height="30" stroke="white" stroke-width="3"/>
+                    <rect x="105" y="140" width="30" height="60" stroke="white" stroke-width="3"/>
+                    <circle cx="130" cy="170" r="2" fill="white"/>
+                    <rect x="60" y="120" width="30" height="30" stroke="white" stroke-width="2"/>
+                    <path d="M75 120 V150 M60 135 H90" stroke="white" stroke-width="1"/>
+                    <rect x="150" y="120" width="30" height="30" stroke="white" stroke-width="2"/>
+                    <path d="M165 120 V150 M150 135 H180" stroke="white" stroke-width="1"/>
+                    <circle cx="120" cy="75" r="10" stroke="white" stroke-width="2"/>
+                    <path d="M120 65 V85 M110 75 H130" stroke="white" stroke-width="1"/>
+                    <path d="M20 200 Q150 210 280 200" stroke="white" stroke-width="2" stroke-dasharray="5 5"/>
                 </svg>
             </div>
 
@@ -942,10 +967,22 @@
                     <div class="impact-text">Material:</div>
                 </div>
                 <div class="material-options">
-                    <div class="mat-circle mat-brick active ripple-btn" onclick="selectMaterial(this, 'brick')" title="Brick"></div>
-                    <div class="mat-circle mat-concrete ripple-btn" onclick="selectMaterial(this, 'concrete')" title="Concrete"></div>
-                    <div class="mat-circle mat-stone ripple-btn" onclick="selectMaterial(this, 'stone')" title="Stone"></div>
-                    <div class="mat-circle mat-wood ripple-btn" onclick="selectMaterial(this, 'wood')" title="Wood"></div>
+                    <div class="mat-item">
+                        <div class="mat-circle mat-brick active ripple-btn" onclick="selectMaterial(this, 'brick')" title="Brick"></div>
+                        <span class="mat-label">Brick</span>
+                    </div>
+                    <div class="mat-item">
+                        <div class="mat-circle mat-concrete ripple-btn" onclick="selectMaterial(this, 'concrete')" title="Concrete"></div>
+                        <span class="mat-label">Concrete</span>
+                    </div>
+                    <div class="mat-item">
+                        <div class="mat-circle mat-metal ripple-btn" onclick="selectMaterial(this, 'metal')" title="Metal"></div>
+                        <span class="mat-label">Metal</span>
+                    </div>
+                    <div class="mat-item">
+                        <div class="mat-circle mat-wood ripple-btn" onclick="selectMaterial(this, 'wood')" title="Wood"></div>
+                        <span class="mat-label">Wood</span>
+                    </div>
                 </div>
             </div>
 
@@ -1039,10 +1076,9 @@
             document.getElementById('furnitureModal').classList.remove('open');
         }
 
-        // --- COLOR MODAL LOGIC (UPDATED) ---
+        // --- COLOR MODAL LOGIC ---
         function openColorModal() {
             document.getElementById('colorModal').classList.add('open');
-            // Init from currentColor
             const hsl = hexToHSL(currentColor);
             modalHue = hsl.h;
             modalSat = hsl.s;
@@ -1079,7 +1115,7 @@
                 hex.onclick = () => {
                     const hsl = hexToHSL(c);
                     modalHue = hsl.h;
-                    modalSat = hsl.s; // This will catch grey/black/white saturation (0)
+                    modalSat = hsl.s; 
                     modalLight = hsl.l;
                     document.getElementById('hueSlider').value = modalHue;
                     document.getElementById('lightnessSlider').value = modalLight;
@@ -1091,7 +1127,6 @@
 
         function updateHueSliderState() {
             const hueSlider = document.getElementById('hueSlider');
-            // Logic: Disable if saturation is low OR lightness is extreme black/white
             if (modalSat < 1 || modalLight === 0 || modalLight === 100) {
                 hueSlider.disabled = true;
             } else {
@@ -1103,17 +1138,13 @@
             modalHue = parseInt(document.getElementById('hueSlider').value);
             modalLight = parseInt(document.getElementById('lightnessSlider').value);
             
-            // Check disable state
             updateHueSliderState();
             
-            // Update brightness slider gradient
             const brightSlider = document.getElementById('lightnessSlider');
             brightSlider.style.background = `linear-gradient(to right, black, hsl(${modalHue}, ${modalSat}%, 50%), white)`;
 
-            // HSL to Hex
             tempColor = HSLToHex(modalHue, modalSat, modalLight);
             
-            // Update UI
             document.getElementById('modalColorPreview').style.backgroundColor = tempColor;
             document.getElementById('modalHexInput').value = tempColor.replace('#', '').toUpperCase();
         }
@@ -1129,7 +1160,6 @@
                 document.getElementById('hueSlider').value = modalHue;
                 document.getElementById('lightnessSlider').value = modalLight;
                 
-                // Update visuals
                 const brightSlider = document.getElementById('lightnessSlider');
                 brightSlider.style.background = `linear-gradient(to right, black, hsl(${modalHue}, ${modalSat}%, 50%), white)`;
                 
@@ -1139,7 +1169,6 @@
             }
         }
 
-        // --- HELPERS ---
         function hexToHSL(H) {
             let r = 0, g = 0, b = 0;
             if (H.length == 4) {
@@ -1190,7 +1219,6 @@
             if (b.length == 1) b = "0" + b;
             return "#" + r + g + b;
         }
-
 
         // --- FURNITURE LOGIC ---
         function setMode(mode) {
